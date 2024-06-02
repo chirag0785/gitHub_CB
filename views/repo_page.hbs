@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{repo.name}}</title>
+    <style>
+        .container{
+            width:60%;
+            margin:auto;
+        }
+        .commit,.issue{
+            border:1px solid grey;
+            margin:20px;
+        }
+        img{
+            width:50px;
+            height:50px;
+            border-radius: 100px;
+        }
+        .committer-details,.user{
+            display: flex;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>{{repo.name}}</h1>
+
+    <div class="container">
+        <div class="commits">
+        <h4>Commits</h4>
+        {{#each commits as |commit|}}
+            <div>{{@key}}</div>
+            {{#each commit as |c|}}
+                <div class="commit">
+                    <div class="message">Message: {{c.commit.message}}</div>
+                    <div class="committer-details">
+                        <img src={{c.committer.avatar_url}} alt="">
+                        <div>{{c.committer.login}}</div>
+                    </div>
+                </div>
+            {{/each}}
+        {{/each}}
+    </div>
+
+
+    <div class="issues">
+        <h4>Issues</h4>
+        {{#each issues as |issue|}}
+            <div>{{@key}}</div>
+            {{#each issue as |i|}}
+                <div class="issue">
+                    <div class="title">{{i.title}}</div>
+                    <div class="error">Error: {{i.body}}</div>
+                    <div class="user">
+                        <img src={{i.user.avatar_url}} alt="">
+                        <div class="user-login">{{i.user.login}}</div>
+                    </div>
+                </div>
+            {{/each}}
+        {{/each}}
+    </div>
+    </div>
+</body>
+</html>

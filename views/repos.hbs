@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{user.login}}</title>
+    <style>
+        .repo-table{
+            border:1px solid rgb(139, 127, 127);
+            padding:20px;
+            border-radius: 30px;
+            width:80%;
+            margin: auto;
+        }
+        .heads-tag{
+            font-size:30px;
+            font-weight: 700;
+        }
+        .heads-tag,.repo{
+            display: flex;
+            margin:30px auto;
+        }
+        .repo{
+            font-size:20px;
+            
+        }
+        .heads-tag div, .repo div{
+            width:15%;
+            column-gap: 10px;
+            text-align: center;
+        }
+        .repo a{
+            width:10%;
+            column-gap: 10px ;
+            text-align: center;
+        }
+        a{
+            text-decoration: none;
+            color:black;
+        }
+        a:visited{
+            color:black;
+        }
+        a:hover .repo{
+            background-color: rgb(223, 217, 193);
+        }
+    </style>
+</head>
+<body>
+    <h1>Repos of {{user.login}}</h1>
+
+    <div>Sort By</div>
+        <a href="/{{user.login}}/repos/sort/name"><button class="name">Name</button></a>
+        <a href="/{{user.login}}/repos/sort/stars"><button class="stars">Stars</button></a>
+        <a href="/{{user.login}}/repos/sort/forks"><button class="stars">Forks</button></a>
+        <a href="/{{user.login}}/repos/sort/open_issues"><button class="stars">Open Issues</button></a>
+    <div class="repo-table">
+        <div class="heads-tag">
+            <div>Name</div>
+            <div>Description</div>
+            <div>Stars</div>
+            <div>forks</div>
+            <div>Open Issues</div>
+        </div>
+        <div class="repos">
+            {{#each repos as |r|}}
+            <div class="repo">
+                <div>{{r.name}}</div>
+                <div>{{r.description}}</div>
+                <div>{{r.stargazers_count}}</div>
+                <div>{{r.forks}}</div>
+                <div>{{r.open_issues}}</div>
+                <a href="/search/{{r.owner.login}}/{{r.name}}">
+                    <button>View</button>
+                </a>
+
+                <a href="/search/{{r.owner.login}}/{{r.name}}/contributors">
+                    <button>Contributors</button>
+                </a>
+                <a href="/search/{{r.owner.login}}/{{r.name}}/commitactivity">
+                    <button>Commit Activity</button>
+                </a>
+            </div>
+
+        {{/each}}
+        </div>
+    </div>
+
+    
+    <script
+src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
+</script>
+    <script src="/js/sorting.js"></script>
+</body>
+</html>

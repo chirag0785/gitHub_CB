@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<body>
+    <h1>Welcome to the home page</h1>
+    {{#if isLoggedIn}}
+        <a href="/logout">Logout</a>
+    {{else}}
+        <a href="/auth/github">Login Via Github</a>
+    {{/if}}
+    <form action="/search" method="GET">
+        <input type="text" placeholder="Enter username" name="username">
+        <button>🔍</button>
+    </form>
+</body>
+</html>

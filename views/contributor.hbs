@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contributors</title>
+    <style>
+        img{
+            width:60px;
+            height:60px;
+            border-radius: 60px;
+        }
+        .contributor{
+            border:1px solid rgb(193, 186, 186);
+            padding:20px;
+            border-radius: 50px;
+        }
+        .contributors{
+            width:60%;
+            margin: auto;
+        }
+        .contributor-details{
+            display: flex;
+            column-gap: 40px;
+            align-items: center;
+            font-size:34px;
+        }
+        .count{
+            font-size:24px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Contributors</h1>
+
+    <div class="contributors">
+        {{#each contributors as |c|}}
+            <div class="contributor">
+                <div class="contributor-details">
+                    <img src={{c.avatar_url}} alt="">
+                    <div>{{c.login}}</div>
+                </div>
+                <div class="count">Contributions: {{c.contributions}}</div>
+            </div>
+        {{/each}}
+    </div>
+</body>
+</html>
