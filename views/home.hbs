@@ -4,6 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
+    <style>
+        .search-box{
+            width:50%;
+            margin:auto;
+            display: flex;
+        }
+        .search-box input{
+            width:90%;
+            padding:7px 0;
+            font-size:17px;
+            border:1px solid rgb(197, 184, 184);
+        }
+        .search-box button{
+            width:8%;
+            padding:7px 0;
+            border:none;
+            background-color: orange;
+            font-size: 20px;
+        }
+        li{
+            list-style: none;
+            width:100%;
+            font-size:18px;
+            line-height: 1.5;
+        }
+        .search-sugg a{
+            text-decoration: none;
+            color:black;
+        }
+        .search-sugg{
+            visibility:hidden;
+            width:50%;
+            margin: auto;
+            border:1px solid rgb(224, 201, 201);
+        }
+    </style>
 </head>
 <body>
     <h1>Welcome to the home page</h1>
@@ -12,9 +48,15 @@
     {{else}}
         <a href="/auth/github">Login Via Github</a>
     {{/if}}
-    <form action="/search" method="GET">
+    <form action="/search" method="GET" class="search-box">
         <input type="text" placeholder="Enter username" name="username">
         <button>🔍</button>
     </form>
+
+    <div class="search-sugg">
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/js/search.js"></script>
 </body>
 </html>

@@ -41,14 +41,36 @@
         a:visited{
             color:black;
         }
-        a:hover .repo{
+        .repo:hover{
             background-color: rgb(223, 217, 193);
+        }
+        .search-box{
+            width:50%;
+            margin: auto;
+            display: flex;
+
+        }
+        .search-box input{
+            width:90%;
+            padding:7px 0;
+            font-size:17px;
+            border:1px solid rgb(197, 184, 184);
+        }
+        .search-box button{
+            width:8%;
+            padding:7px 0;
+            border:none;
+            background-color: orange;
+            font-size: 20px;
         }
     </style>
 </head>
 <body>
     <h1>Repos of {{user.login}}</h1>
-
+    <div class="search-box">
+        <input type="text" name="repo" placeholder="Enter repo name">
+        <button class="btn">🔍</button>
+    </div>
     <div>Sort By</div>
         <a href="/{{user.login}}/repos/sort/name"><button class="name">Name</button></a>
         <a href="/{{user.login}}/repos/sort/stars"><button class="stars">Stars</button></a>
@@ -64,7 +86,7 @@
         </div>
         <div class="repos">
             {{#each repos as |r|}}
-            <div class="repo">
+            <div class="repo" id="{{r.id}}">
                 <div>{{r.name}}</div>
                 <div>{{r.description}}</div>
                 <div>{{r.stargazers_count}}</div>
@@ -90,6 +112,6 @@
     <script
 src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
 </script>
-    <script src="/js/sorting.js"></script>
+    <script src="/js/searchRepo.js"></script>
 </body>
 </html>
