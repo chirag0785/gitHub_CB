@@ -40,7 +40,7 @@ module.exports.getUser=async (req,res,next)=>{
         else{
             user=await axios.get(`https://api.github.com/users/${username}`);
             user=user.data;
-            await client.set(`User_${username}`,JSON.stringify(user),'EX', seconds);
+            await client.set(`User_${username}`,JSON.stringify(user),{EX: seconds,NX: true});
         }
         if(req.isAuthenticated()){
             let user=await User.findOne({username:req.user.username});
@@ -62,7 +62,7 @@ module.exports.getUser=async (req,res,next)=>{
         else{
             repos=await axios.get(`https://api.github.com/users/${username}/repos`);
             repos=repos.data;
-            await client.set(`Repos_${username}`,JSON.stringify(repos),'EX', seconds);
+            await client.set(`Repos_${username}`,JSON.stringify(repos),{EX: seconds,NX: true});
         }
         res.render('repos',{
             repos:repos,
@@ -87,7 +87,7 @@ module.exports.getRepo=async (req,res,next)=>{
         else{
             commits=await axios.get(`https://api.github.com/repos/${username}/${repo}/commits`);
             commits=commits.data;
-            await client.set(`commits_${username}_${repo}`,JSON.stringify(commits),'EX', seconds);
+            await client.set(`commits_${username}_${repo}`,JSON.stringify(commits),{EX: seconds,NX: true});
         }
 
 
@@ -99,7 +99,7 @@ module.exports.getRepo=async (req,res,next)=>{
         else{
             issues=await axios.get(`https://api.github.com/repos/${username}/${repo}/issues`);
             issues=issues.data;
-            await client.set(`issues_${username}_${repo}`,JSON.stringify(issues),'EX', seconds);
+            await client.set(`issues_${username}_${repo}`,JSON.stringify(issues),{EX: seconds,NX: true});
         }
         res.render('repo_page',{
             repo,
@@ -126,7 +126,7 @@ module.exports.getContributors=async (req,res,next)=>{
         else{
             contributors=await axios.get(`https://api.github.com/repos/${username}/${repo}/contributors`);
             contributors=contributors.data;
-            await client.set(`contributors_${username}_${repo}`,contributors,'EX', seconds);
+            await client.set(`contributors_${username}_${repo}`,contributors,{EX: seconds,NX: true});
         }
         res.render('contributor',{
             contributors
@@ -177,7 +177,7 @@ module.exports.getRepoSortByStars=async (req,res,next)=>{
         else{
             user=await axios.get(`https://api.github.com/users/${username}`);
             user=user.data;
-            await client.set(`User_${username}`,JSON.stringify(user),'EX', seconds);
+            await client.set(`User_${username}`,JSON.stringify(user),{EX: seconds,NX: true});
         }
         let cachedRepo=await client.get(`Repos_${username}`);
         let repos;
@@ -187,7 +187,7 @@ module.exports.getRepoSortByStars=async (req,res,next)=>{
         else{
             repos=await axios.get(`https://api.github.com/users/${username}/repos`);
             repos=repos.data;
-            await client.set(`Repos_${username}`,JSON.stringify(repos),'EX', seconds);
+            await client.set(`Repos_${username}`,JSON.stringify(repos),{EX: seconds,NX: true});
         }
         repos.sort(compByStars);
         res.render('repos',{
@@ -212,7 +212,7 @@ module.exports.getRepoSortByForks=async (req,res,next)=>{
         else{
             user=await axios.get(`https://api.github.com/users/${username}`);
             user=user.data;
-            await client.set(`User_${username}`,JSON.stringify(user),'EX', seconds);
+            await client.set(`User_${username}`,JSON.stringify(user),{EX: seconds,NX: true});
         }
         let cachedRepo=await client.get(`Repos_${username}`);
         let repos;
@@ -222,7 +222,7 @@ module.exports.getRepoSortByForks=async (req,res,next)=>{
         else{
             repos=await axios.get(`https://api.github.com/users/${username}/repos`);
             repos=repos.data;
-            await client.set(`Repos_${username}`,JSON.stringify(repos),'EX', seconds);
+            await client.set(`Repos_${username}`,JSON.stringify(repos),{EX: seconds,NX: true});
         }
         repos.sort(compByForks);
         res.render('repos',{
@@ -247,7 +247,7 @@ module.exports.getRepoSortByIssues=async (req,res,next)=>{
         else{
             user=await axios.get(`https://api.github.com/users/${username}`);
             user=user.data;
-            await client.set(`User_${username}`,JSON.stringify(user),'EX', seconds);
+            await client.set(`User_${username}`,JSON.stringify(user),{EX: seconds,NX: true});
         }
         let cachedRepo=await client.get(`Repos_${username}`);
         let repos;
@@ -257,7 +257,7 @@ module.exports.getRepoSortByIssues=async (req,res,next)=>{
         else{
             repos=await axios.get(`https://api.github.com/users/${username}/repos`);
             repos=repos.data;
-            await client.set(`Repos_${username}`,JSON.stringify(repos),'EX', seconds);
+            await client.set(`Repos_${username}`,JSON.stringify(repos),{EX: seconds,NX: true});
         }
         repos.sort(compByIssues);
         res.render('repos',{
@@ -282,7 +282,7 @@ module.exports.getRepoSortByName=async (req,res,next)=>{
         else{
             user=await axios.get(`https://api.github.com/users/${username}`);
             user=user.data;
-            await client.set(`User_${username}`,JSON.stringify(user),'EX', seconds);
+            await client.set(`User_${username}`,JSON.stringify(user),{EX: seconds,NX: true});
         }
         let cachedRepo=await client.get(`Repos_${username}`);
         let repos;
@@ -292,7 +292,7 @@ module.exports.getRepoSortByName=async (req,res,next)=>{
         else{
             repos=await axios.get(`https://api.github.com/users/${username}/repos`);
             repos=repos.data;
-            await client.set(`Repos_${username}`,JSON.stringify(repos),'EX', seconds);
+            await client.set(`Repos_${username}`,JSON.stringify(repos),{EX: seconds,NX: true});
         }
         repos.sort(compByName);
         res.render('repos',{
