@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{repo.name}}</title>
     <style>
+        body{
+            background-color: #3a3944;
+            color:white;
+        }
         .container{
             width:60%;
             margin:auto;
@@ -12,6 +16,8 @@
         .commit,.issue{
             border:1px solid grey;
             margin:20px;
+            padding:10px;
+            font-size:20px;
         }
         img{
             width:50px;
@@ -21,6 +27,10 @@
         .committer-details,.user{
             display: flex;
             align-items: center;
+            column-gap: 30px;
+        }
+        .date{
+            font-size:25px;
         }
     </style>
 </head>
@@ -29,9 +39,9 @@
 
     <div class="container">
         <div class="commits">
-        <h4>Commits</h4>
+        <h2>Commits</h2>
         {{#each commits as |commit|}}
-            <div>{{@key}}</div>
+            <div class="date">{{@key}}</div>
             {{#each commit as |c|}}
                 <div class="commit">
                     <div class="message">Message: {{c.commit.message}}</div>
@@ -46,9 +56,9 @@
 
 
     <div class="issues">
-        <h4>Issues</h4>
+        <h2>Issues</h2>
         {{#each issues as |issue|}}
-            <div>{{@key}}</div>
+            <div class="date">{{@key}}</div>
             {{#each issue as |i|}}
                 <div class="issue">
                     <div class="title">{{i.title}}</div>

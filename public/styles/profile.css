@@ -1,0 +1,109 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+nav{
+    width:100%;
+    background-color: black;
+    height:100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.search-thing{
+    width:70%;
+    position: relative;
+}
+.search-box{
+    width:70%;
+    height:40%;
+    margin: auto auto;
+    display: flex;
+}
+.search-box input{
+    width:90%;
+    font-size:17px;
+    border:1px solid rgb(197, 184, 184);
+}
+.search-box button{
+    width:8%;
+    padding:7px 0;
+    border:none;
+    background-color: orange;
+    font-size: 20px;
+}
+li{
+    list-style: none;
+    width:100%;
+    font-size:18px;
+    line-height: 1.5;
+}
+.search-sugg a{
+    text-decoration: none;
+    color:white;
+}
+.search-sugg{
+    position: absolute;
+    top:41px;
+    left:125px;
+    visibility:hidden;
+    width:70%;
+    border:1px solid rgb(224, 201, 201);
+    background-color: rgb(68, 52, 52);
+    color:white;
+}
+body{
+    background-color: #3a3944;
+    color:white;
+}
+h1{
+    font-size:40px;
+    width:30%;
+    margin:auto;
+}
+.log{
+    color:white;
+    text-decoration: none;
+    border:1px solid grey;
+    background-color: black;
+    padding:10px;
+}
+.userSearchHistory{
+    color: white;
+}
+.user{
+    border:1px solid rgb(117, 116, 116)
+}
+.userBox:hover .user{
+    background-color: #54545e;
+}
+.userBox{
+    text-decoration: none;
+    color:white;
+}
+.user{
+    height:100px;
+    width:200px;
+}
+.userSearchHistory{
+    width:30%;
+}
+.users{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+.userInfo{
+    width:40%;
+    color:white;
+}
+.userData{
+    display: flex;
+    justify-content: space-around;
+}
+.userInfo img{
+    width:300px;
+    height:300px;
+    border-radius: 300px;
+    z-index: 10;
+}

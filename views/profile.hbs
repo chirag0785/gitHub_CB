@@ -4,10 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile</title>
+    <link rel="stylesheet" href="/styles/profile.css">
 </head>
 <body>
-   <h1>Welcome to profile</h1> 
-   loginId:{{user.githubId}}
-   <a href="/logout">Logout</a>
+    <nav>
+        {{user.username}}
+        <div class="search-thing">
+            <form action="/search" method="GET" class="search-box">
+            <input type="text" placeholder="Enter username" name="username">
+            <button>🔍</button>
+        </form>
+
+        <div class="search-sugg">
+
+        </div>
+        </div>
+        <a href="/logout" class="log">Logout</a>
+    </nav>
+   
+
+
+   
+    <div class="userData">
+        <div class="userInfo">
+            <img src={{user.githubImg}} alt="">
+            <div>{{user.username}}</div>
+        </div>
+    <div class="userSearchHistory">
+        <div>Recent Searches</div>
+        <div class="users">
+            {{#each userSearched as |u|}}
+        <a href="/search?username={{u}}" class="userBox">
+            <div class="user">
+                <div class="username">{{u}}</div>
+            </div>
+        </a>
+        {{/each}}
+        </div>
+        
+    </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/js/search.js"></script>
 </body>
 </html>

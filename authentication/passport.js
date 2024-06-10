@@ -14,7 +14,11 @@ passport.use(new GitHubStrategy({
             return done(null,user);
         }
         
-        user=await User.create({githubId:profile.id});
+        user=await User.create({
+          githubId:profile.id,
+          githubImg:profile._json.avatar_url,
+          username:profile.username
+        });
         return done(null,user);
     }catch(err){
         done(err);

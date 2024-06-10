@@ -6,6 +6,11 @@ let userSchema=new Schema({
     },
     password:String,
     githubId:String,
+    githubImg:String,
+    searchHistory: {
+        type: [String],
+        default: [] 
+    }
 })
 
 module.exports=mongoose.model('users',userSchema)

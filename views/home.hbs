@@ -7,7 +7,7 @@
     <style>
         .search-box{
             width:50%;
-            margin:auto;
+            margin:70px auto;
             display: flex;
         }
         .search-box input{
@@ -36,17 +36,36 @@
         .search-sugg{
             visibility:hidden;
             width:50%;
-            margin: auto;
+            margin: 70px auto;
             border:1px solid rgb(224, 201, 201);
+        }
+        body{
+            background-color: #3a3944;
+            color:white;
+        }
+        h1{
+            font-size:40px;
+            width:30%;
+            margin:auto;
+        }
+        .log{
+            position:absolute;
+            top:30px;
+            right:15px;
+            color:white;
+            text-decoration: none;
+            border:1px solid grey;
+            background-color: black;
+            padding:10px;
         }
     </style>
 </head>
 <body>
     <h1>Welcome to the home page</h1>
     {{#if isLoggedIn}}
-        <a href="/logout">Logout</a>
+        <a href="/logout" class="log">Logout</a>
     {{else}}
-        <a href="/auth/github">Login Via Github</a>
+        <a href="/auth/github" class="log">Login Via Github</a>
     {{/if}}
     <form action="/search" method="GET" class="search-box">
         <input type="text" placeholder="Enter username" name="username">
