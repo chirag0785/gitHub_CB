@@ -2,6 +2,8 @@ const axios=require('axios');
 const {getCommitsCategoryWise,getIssuesCategoryWise,compByForks,compByIssues,compByName,compByStars}=require('../utils/utils');
 const User=require('../models/user');
 const redis=require('redis');
+var base64 = require('base-64');
+var utf8 = require('utf8');
 let seconds=3600;
 let client;
 async function connectToRedis(){
@@ -79,6 +81,20 @@ module.exports.getRepo=async (req,res,next)=>{
         if(client===undefined){
             connectToRedis();
         }
+        let readmeCache=await client.get(`readme_${username}_${repo}`);
+        let readme;
+        if(readmeCache){
+            readme=JSON.parse(readmeCache);
+        }
+        else{
+            const { data } = await axios.get(`https://api.github.com/repos/${username}/${repo}/contents`);
+            const readmeFile = data.find(d => d.name.toLowerCase() === 'readme.md');
+            if (readmeFile) {
+                const readmeResponse = await axios.get(readmeFile.url);
+                readme = readmeResponse.data;
+                await client.set(`readme_${username}_${repo}`, JSON.stringify(readme), { EX: seconds, NX: true });
+            }
+        }
         let commits;
         let cachedCommit=await client.get(`commits_${username}_${repo}`);
         if(cachedCommit){
@@ -101,11 +117,16 @@ module.exports.getRepo=async (req,res,next)=>{
             issues=issues.data;
             await client.set(`issues_${username}_${repo}`,JSON.stringify(issues),{EX: seconds,NX: true});
         }
+
+        var bytes = base64.decode(readme.content);
+        var text = utf8.decode(bytes);
+        console.log(text);
         res.render('repo_page',{
             repo,
             username,
             commits:getCommitsCategoryWise(commits.slice(0,10)),
             issues:getIssuesCategoryWise(issues),
+            readme:text
         })
     }catch(err){
         res.send(err);
@@ -126,7 +147,7 @@ module.exports.getContributors=async (req,res,next)=>{
         else{
             contributors=await axios.get(`https://api.github.com/repos/${username}/${repo}/contributors`);
             contributors=contributors.data;
-            await client.set(`contributors_${username}_${repo}`,contributors,{EX: seconds,NX: true});
+            await client.set(`contributors_${username}_${repo}`,JSON.stringify(contributors),{EX: seconds,NX: true});
         }
         res.render('contributor',{
             contributors

@@ -32,12 +32,21 @@
         .date{
             font-size:25px;
         }
+        .readme{
+            border:1px solid grey;
+        }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify/dist/purify.min.js"></script>
 </head>
 <body>
     <h1>{{repo.name}}</h1>
 
     <div class="container">
+        <h2>Readme</h2>
+        <div class="readme" id="readme">
+            {{readme}}
+        </div>
         <div class="commits">
         <h2>Commits</h2>
         {{#each commits as |commit|}}
@@ -72,5 +81,6 @@
         {{/each}}
     </div>
     </div>
+    <script src="/js/readme.js"></script>
 </body>
 </html>

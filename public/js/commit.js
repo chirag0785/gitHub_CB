@@ -1,18 +1,4 @@
 // Format date to "day month year" format
-const redis=require('redis');
-let client;
-async function connectToRedis(){
-    try{
-         client = redis.createClient({
-            host: '127.0.0.1',
-            port: 6379
-        });
-        client.on('error', err => console.log('Redis Client Error', err));
-        await client.connect();
-    }catch(err){
-        console.log('Error in redis');
-    }
-}
 function formatDate(dateString) {
     const date = new Date(dateString);
     const options = { day: 'numeric', month: 'long', year: 'numeric' };
@@ -34,21 +20,14 @@ function getCommitsCategoryWise(commits) {
 
 // Fetch commits from the GitHub repository
 async function getCommits(username, repo) {
-    let commits;
     try{
-        let cachedCommit=await client.get(`commits_${username}_${repo}`);
-        if(cachedCommit){
-            commits=JSON.parse(cachedCommit);
-        }
-        else{
-            commits=await axios.get(`https://api.github.com/repos/${username}/${repo}/commits`);
-            commits=commits.data;
-            await client.set(`commits_${username}_${repo}`,JSON.stringify(commits));
-        }
+        let commits=await axios.get(`https://api.github.com/repos/${username}/${repo}/commits`);
+        commits=commits.data;
+        return commits;
     }catch(err){
         console.log('commits mein error');
+        return err;
     }
-    return commits;
 }
 
 // Main function to fetch data and create the chart
@@ -100,6 +79,8 @@ async function main() {
                 }]
             }
         });
+        
+
     } catch (error) {
         console.error('Error fetching commit data:', error);
     }
